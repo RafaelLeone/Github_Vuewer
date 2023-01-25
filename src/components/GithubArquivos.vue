@@ -2,8 +2,7 @@
     <div>
       <v-row>
         <v-col cols="12">
-          <span v-for="pasta in pastasabertas" :key="pasta"><v-btn @click="listaIssues(pasta)"> > {{ pasta }} </v-btn></span>
-          <span> {{ this.pastasabertas }} </span>
+          <span v-for="pasta in pastasabertas" :key="pasta"><v-btn @click="listaArquivos(pasta)"> > {{ pasta }} </v-btn></span>
             <v-simple-table>
               <template v-slot:default>
                 
@@ -14,10 +13,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="issue in issues" :key="issue.number">
-                    <td>{{ issue.type }}</td>
-                    <td v-if="issue.type=='dir'"><v-btn @click="listaIssues(issue.path)">{{ issue.path }}</v-btn></td>
-                    <td v-else>{{ issue.name }}</td>
+                  <tr v-for="arquivo in arquivos" :key="arquivo.number">
+                    <td>{{ arquivo.type }}</td>
+                    <td v-if="arquivo.type=='dir'"><v-btn @click="listaArquivos(arquivo.path)">{{ arquivo.path }}</v-btn></td>
+                    <td v-else>{{ arquivo.name }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -39,46 +38,40 @@
     export default {
       props: ['repo'],
       data: () => ({
-        issues: [],
+        arquivos: [],
         pastasabertas: [],
         loading: false,
         temmais: false,
-        currentPage: 1
       }),
       methods: {
-        async listaIssues(path){
-          this.issues = []
+        async listaArquivos(path){
+          this.arquivos = []
           this.loading = true
-          const maisissues = await api.listaIssues(this.repo.owner.login, this.repo.name, path)
-          this.issues = this.issues.concat(maisissues)
-          this.currentPage++
+          const maisarquivos = await api.listaArquivos(this.repo.owner.login, this.repo.name, path)
+          this.arquivos = this.arquivos.concat(maisarquivos)
           if (!this.pastasabertas.includes(path)) {
             this.pastasabertas.push(path)
           }
           else {
             for (let index in this.pastasabertas) {
-              debugger
               if (this.pastasabertas.indexOf(path) == index) {
-                console.log(index)
                 this.pastasabertas.splice(parseInt(index) + 1, this.pastasabertas.length)
               }
             }
           }
           this.loading = false
-          this.temmais = maisissues.length > 0
+          this.temmais = maisarquivos.length > 0
         }
       },
       watch: {
         repo(){
-          this.issues = []
+          this.arquivos = []
           if (this.repo) {
             this.temmais = false
-            this.currentPage = 1
-            this.listaIssues('')
+            this.listaArquivos('')
           } else {
-            this.issues = []
+            this.arquivos = []
             this.temmais = false
-            this.currentPage = 1
           }
         }
       }
