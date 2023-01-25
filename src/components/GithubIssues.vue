@@ -12,8 +12,9 @@
                 </thead>
                 <tbody>
                   <tr v-for="issue in issues" :key="issue.number">
-                    <td>{{ issue.number }}</td>
-                    <td>{{ issue.title }}</td>
+                    <td>{{ issue.type }}</td>
+                    <td v-if="issue.type=='dir'"><v-btn>{{ issue.path }}</v-btn></td>
+                    <td v-else>{{ issue.name }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -23,7 +24,6 @@
       <v-row>
         <v-col cols="12">
           <v-progress-circular indeterminate color="primary" v-if="loading"></v-progress-circular>
-          <v-btn color="primary" v-if="temmais" @click="listaIssues">MAIS</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -44,7 +44,7 @@
       methods: {
         async listaIssues(){
           this.loading = true
-          const maisissues = await api.listaIssues(this.repo.owner.login, this.repo.name, this.currentPage)
+          const maisissues = await api.listaIssues(this.repo.owner.login, this.repo.name)
           this.issues = this.issues.concat(maisissues)
           this.currentPage++
           this.loading = false

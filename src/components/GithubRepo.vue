@@ -66,6 +66,7 @@
       },
       repo () {
         this.$emit('reposelected', this.repo)
+        debugger
       }
     }
   }
