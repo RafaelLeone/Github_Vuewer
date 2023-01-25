@@ -2,8 +2,11 @@
     <div>
       <v-row>
         <v-col cols="12">
+          <span v-for="pasta in pastasabertas" :key="pasta"><v-btn @click="listaIssues(pasta)"> > {{ pasta }} </v-btn></span>
+          <span> {{ this.pastasabertas }} </span>
             <v-simple-table>
               <template v-slot:default>
+                
                 <thead>
                   <tr>
                     <th class="text-left">Type</th>
@@ -37,6 +40,7 @@
       props: ['repo'],
       data: () => ({
         issues: [],
+        pastasabertas: [],
         loading: false,
         temmais: false,
         currentPage: 1
@@ -48,6 +52,9 @@
           const maisissues = await api.listaIssues(this.repo.owner.login, this.repo.name, path)
           this.issues = this.issues.concat(maisissues)
           this.currentPage++
+          if (!this.pastasabertas.includes(path)) {
+            this.pastasabertas.push(path)
+          }
           this.loading = false
           this.temmais = maisissues.length > 0
         }
