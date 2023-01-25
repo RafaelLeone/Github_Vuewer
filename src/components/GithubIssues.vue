@@ -57,9 +57,10 @@
           }
           else {
             for (let index in this.pastasabertas) {
+              debugger
               if (this.pastasabertas.indexOf(path) == index) {
                 console.log(index)
-                this.pastasabertas.splice(index + 1, this.pastasabertas.length)
+                this.pastasabertas.splice(parseInt(index) + 1, this.pastasabertas.length)
               }
             }
           }
