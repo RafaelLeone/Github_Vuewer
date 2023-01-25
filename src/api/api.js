@@ -26,8 +26,8 @@ export const api = {
         const data = await fetch_all_pages(url)
         return data
     },
-    async listaIssues(owner, name) {
-        const url = `https://api.github.com/repos/${owner}/${name}/contents/`
+    async listaIssues(owner, name, path) {
+        const url = `https://api.github.com/repos/${owner}/${name}/contents/${path}`
         const response = await fetch(url)
         return await response.json()
     }

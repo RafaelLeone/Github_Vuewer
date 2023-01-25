@@ -6,14 +6,14 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Number</th>
+                    <th class="text-left">Type</th>
                     <th class="text-left">Title</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="issue in issues" :key="issue.number">
                     <td>{{ issue.type }}</td>
-                    <td v-if="issue.type=='dir'"><v-btn>{{ issue.path }}</v-btn></td>
+                    <td v-if="issue.type=='dir'"><v-btn @click="listaIssues(issue.path)">{{ issue.path }}</v-btn></td>
                     <td v-else>{{ issue.name }}</td>
                   </tr>
                 </tbody>
@@ -42,9 +42,10 @@
         currentPage: 1
       }),
       methods: {
-        async listaIssues(){
+        async listaIssues(path){
+          this.issues = []
           this.loading = true
-          const maisissues = await api.listaIssues(this.repo.owner.login, this.repo.name)
+          const maisissues = await api.listaIssues(this.repo.owner.login, this.repo.name, path)
           this.issues = this.issues.concat(maisissues)
           this.currentPage++
           this.loading = false
@@ -57,7 +58,7 @@
           if (this.repo) {
             this.temmais = false
             this.currentPage = 1
-            this.listaIssues()
+            this.listaIssues('')
           } else {
             this.issues = []
             this.temmais = false
