@@ -1,5 +1,11 @@
 # github_vuewer
 
+Link to site: [Click here](https://rafaelleone.github.io/github_vuewer-1/)
+
+Demo:
+![githubvuewer-demo](https://user-images.githubusercontent.com/80486959/214653451-8c89811a-cb8d-44ab-85a2-58b0ca02f0c6.png)
+
+
 ## Project setup
 ```
 npm install
