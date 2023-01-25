@@ -55,6 +55,14 @@
           if (!this.pastasabertas.includes(path)) {
             this.pastasabertas.push(path)
           }
+          else {
+            for (let index in this.pastasabertas) {
+              if (this.pastasabertas.indexOf(path) == index) {
+                console.log(index)
+                this.pastasabertas.splice(index + 1, this.pastasabertas.length)
+              }
+            }
+          }
           this.loading = false
           this.temmais = maisissues.length > 0
         }
