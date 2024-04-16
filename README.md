@@ -1,4 +1,4 @@
-# github_vuewer
+# Github Vuewer
 
 Link to site: [Click here](https://rafaelleone.github.io/Github_Vuewer/)
 
